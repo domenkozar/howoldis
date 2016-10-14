@@ -1,9 +1,12 @@
+{-# LANGUAGE DeriveGeneric #-}
 module Channels (DiffChannel (..), channels, jobset) where
 
 import Control.Monad (liftM)
 import Control.Lens
+import GHC.Generics
 import Network.Wreq
 import Text.HTML.TagSoup (sections, (~==), (~/=), innerText, parseTags)
+import Data.Aeson (ToJSON)
 import Data.List (isPrefixOf)
 import Data.Time.Clock (UTCTime, NominalDiffTime, getCurrentTime, diffUTCTime)
 import Data.Time.Format (parseTimeM, defaultTimeLocale)
@@ -18,8 +21,9 @@ data Channel = Channel { name :: String
 data DiffChannel = DiffChannel { dname  :: String
                                , dlabel :: Color
                                , dtime  :: String
-                               } deriving (Show)
+                               } deriving (Show, Generic)
 
+instance ToJSON DiffChannel
 type Color = String
 
 

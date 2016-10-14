@@ -25,6 +25,9 @@ main = do
       channelName <- param "channel"
       let mainChannel = findChannel channelName allChannels
       html $ renderHtml $(shamletFile "index.hamlet")
+    get "/api/channels" $ do
+      allChannels <- liftIO $ channels
+      json $ allChannels
 
 
 findChannel :: String -> [DiffChannel] -> DiffChannel
